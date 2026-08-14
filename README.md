@@ -7,6 +7,7 @@ This repository contains my learning journey toward becoming a Full Stack Web De
 - 01 - HTML & CSS Portfolio
 - 02 - DOM Practice
 - 03 - Random User App
+- 04 - Smart Todo App
 
 ## Technologies
 
