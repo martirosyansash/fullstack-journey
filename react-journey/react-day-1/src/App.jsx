@@ -1,64 +1,130 @@
 import { useState } from 'react'
 import './App.css'
 
-// function Welcome(props) { 
-//   const name = props.name;
-//   return (
-//     <div>
-//       <h1>React Learning App</h1>
-//       <p>Hello, { name}!</p>
-//     </div>
-//   )
-// }
+function UserCard({ user }) {
+  const { name, age, profession } = user;
+  const [showDetails, setShowDetails] = useState(false);
 
-// function Counter() { 
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <div>
-//       <p>Count: {count}</p>
-//       <button onClick={() => {setCount(count + 1);}}>[ + ]</button>
-//       <button onClick={() => { setCount(count - 1)}}>[ - ]</button>
-//     </div>
-//   )
- 
-// } 
-
-function UserCard({ name, age, profession }) {
-  const [showLess, setShowLess] = useState(false);
   return (
     <div>
       <p>Name: {name}</p>
-      <p>{ showLess ? `age : ${age}` : ""}</p> 
-      <p>{ showLess ? `profession : ${profession}`: ""}</p>
-      <button onClick={() => { setShowLess(!showLess) }}>{showLess ?  `[ Hide ]`: `[ Show ]` }</button>
-      <br />
+
+      {showDetails && (
+        <div>
+          <p>Age: {age}</p>
+          <p>Profession: {profession}</p>
+        </div>
+      )}
+
+      <button onClick={() => setShowDetails(!showDetails)}>
+        {showDetails ? "[ Hide ]" : "[ Show ]"}
+      </button>
     </div>
+  );
+}
+
+function AddUser({ onAddUser }) { 
+  
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [profession, setProfession] = useState("");
+  const [error, setError] = useState("");
+
+  function handleSubmit(event) { 
+    event.preventDefault();
+    if (name.trim() === "") {
+      setError("Name is required");
+      return;
+    }
+
+    if (age === "") {
+      setError("Age is required");
+      return;
+    }
+
+    if (Number(age) <= 0 || Number(age) > 120) {
+      setError("Number is not valid");
+      return;
+    }
+
+    if (profession.trim() === "") {
+      setError("Profession is required");
+      return;
+    }
+    setError("");
+    onAddUser({
+      name: name.trim(),
+      age: Number(age),
+      profession: profession.trim()
+    });
+    setName("");
+    setAge("");
+    setProfession("");
+  }
+
+  return (
+    <form className='form' onSubmit={handleSubmit}>
+      <input type="text"
+        value={name}
+        onChange={(evt) => { setName(evt.target.value) }}
+      />
+      <input type="number"
+        value={age}
+        onChange={(evt) => { setAge(evt.target.value) }}
+      />
+      <input type="text"
+        value={profession}
+        onChange={(evt) => { setProfession(evt.target.value) }}
+      />
+      <button type='submit'> Add User </button>
+      {error && <p>{ error }</p>}
+    </form>
   )
 }
 
 function App() {
+  const [users, setUsers] = useState([
+    {
+      id: 1,
+      name: "Sasha",
+      age: 28,
+      profession: "Frontend Developer"
+    },
+    {
+      id: 2,
+      name: "Hakob",
+      age: 18,
+      profession: "Engineer"
+    },
+    {
+      id: 3,
+      name: "Armen",
+      age: 22,
+      profession: "Teacher"
+    }
+  ]);
+  function addUser(user) {
+    setUsers((prevUsers) => [
+      ...prevUsers,
+      {
+        id: Date.now(),
+        ...user
+      }
+    ]);
+  }
 
   return (
     <div>
-      <UserCard
-        name="Sasha"
-        age={28}
-        profession="Frontend Developer"
-      />
-      <UserCard
-        name="Hakob"
-        age={18}
-        profession="Engineer"
-      />
-      <UserCard
-        name="Armen"
-        age={22}
-        profession="Teacher"
-      />
+      {
+        users.map((user) => (
+          <UserCard
+            key={user.id}
+            user={user}
+          />
+        ))
+      }
+      <AddUser onAddUser={addUser} />
     </div>
-    
-  )
+  );
 }
-
 export default App
