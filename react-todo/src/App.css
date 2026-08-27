@@ -1,0 +1,397 @@
+:root {
+  --bg: #111827;
+  --panel: #1f2937;
+  --panel-hover: #273449;
+  --panel-light: #374151;
+
+  --text: #f9fafb;
+  --muted: #9ca3af;
+
+  --accent: #22c55e;
+  --accent-hover: #16a34a;
+
+  --edit: #2563eb;
+  --edit-hover: #1d4ed8;
+
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+
+  --border: #4b5563;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#root {
+  width: 100%;
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+h1 {
+  margin: 0 0 28px;
+  text-align: center;
+  font-size: 44px;
+  color: var(--text);
+}
+
+/* =========================
+   ADD TASK
+========================= */
+
+.add-task {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.add-task input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+
+  font-size: 16px;
+}
+
+.add-task input::placeholder {
+  color: var(--muted);
+}
+
+.add-task input:focus {
+  border-color: var(--accent);
+}
+
+.add-task button {
+  min-width: 110px;
+  padding: 10px 16px;
+
+  background: var(--accent);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.add-task button:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   SEARCH + FILTER
+========================= */
+
+.search-filter {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.search-filter input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+
+  font-size: 16px;
+}
+
+.search-filter input::placeholder {
+  color: var(--muted);
+}
+
+.search-filter select {
+  min-width: 150px;
+  padding: 10px 12px;
+
+  background: var(--panel);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+.search-filter input:focus,
+.search-filter select:focus {
+  border-color: var(--accent);
+}
+
+/* =========================
+   TASK LIST
+========================= */
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* =========================
+   TASK ITEM
+========================= */
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 14px;
+
+  background: var(--panel);
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
+}
+
+.task-item:hover {
+  transform: translateY(-2px);
+  background: var(--panel-hover);
+
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.22);
+}
+
+.task-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.task-item span {
+  flex: 1;
+  min-width: 0;
+
+  padding: 8px 10px;
+
+  font-size: 16px;
+  text-align: left;
+
+  word-break: break-word;
+}
+
+.task-item input[type="text"] {
+  min-width: 0;
+
+  padding: 9px 12px;
+
+  background: var(--panel-light);
+  color: var(--text);
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  outline: none;
+
+  font-size: 16px;
+}
+.edit-form{
+  flex: 1;
+}
+
+.task-item input[type="text"]:focus {
+  border-color: var(--accent);
+}
+
+/* =========================
+   TASK BUTTONS
+========================= */
+
+.task-item button {
+  flex-shrink: 0;
+
+  padding: 8px 12px;
+
+  background: var(--panel-light);
+  color: white;
+
+  border: none;
+  border-radius: 7px;
+
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-btn:hover {
+  background: var(--edit);
+  transform: translateY(-1px);
+}
+
+.delete-btn:hover {
+  background: var(--danger);
+  transform: translateY(-1px);
+}
+
+.cancel-btn:hover {
+  background: #6b7280;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   COMPLETED TASK
+========================= */
+
+.completed {
+  color: var(--muted);
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* =========================
+   TASK STATS
+========================= */
+
+.task-stats {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin-top: 18px;
+}
+
+.task-stats .clear {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-bottom: 16px;
+}
+
+.task-stats .clear button {
+  padding: 9px 16px;
+
+  background: var(--panel-light);
+  color: white;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.task-stats .clear button:hover {
+  background: var(--danger-hover);
+  transform: translateY(-1px);
+}
+
+.task-stats .stats {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  text-align: center;
+}
+
+.task-stats .stats span {
+  font-size: 18px;
+  color: var(--muted);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+  #root {
+    padding: 20px 12px;
+  }
+
+  h1 {
+    font-size: 34px;
+  }
+
+  .add-task,
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .add-task input,
+  .add-task button,
+  .search-filter input,
+  .search-filter select {
+    width: 100%;
+  }
+
+  .add-task button,
+  .search-filter select {
+    min-width: 0;
+  }
+
+  .task-item {
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .task-item span,
+  .task-item input[type="text"] {
+    flex: 1 1 calc(100% - 35px);
+  }
+
+  .task-item button {
+    flex: 1;
+    min-height: 38px;
+  }
+
+  .task-stats .clear {
+    flex-direction: column;
+  }
+
+  .task-stats .clear button {
+    width: 100%;
+  }
+
+  .task-stats .stats {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
