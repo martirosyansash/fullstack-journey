@@ -71,14 +71,6 @@ jobs:
           mkdir -p ../site/product-explorer
           cp -r dist/* ../site/product-explorer/
 
-      - name: Build React Example
-        working-directory: react-example
-        run: |
-          npm ci
-          npm run build
-          mkdir -p ../site/react-example
-          cp -r dist/* ../site/react-example/
-
       - name: Build React Weather App
         working-directory: react-weather-app
         env:

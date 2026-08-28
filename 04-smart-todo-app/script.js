@@ -30,8 +30,9 @@ const saveEdit = document.querySelector("#saveEdit");
 // =========================
 // DATA
 // =========================
+const STORAGE_KEY = "vanillaTodoTasks";
 
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
 let editingTask = null;
 
@@ -60,7 +61,7 @@ const priorityMap = {
 // =========================
 
 function saveTasks() {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
 }
 
 

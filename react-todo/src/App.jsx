@@ -6,6 +6,7 @@ import AddTask from "./components/AddTask";
 import TaskStats from "./components/TaskStats";
 import SearchFilter from "./components/SearchFilter";
 
+const STORAGE_KEY = "reactTodoTasks";
 const initialTasks = [
   {
     id: 1,
@@ -37,6 +38,7 @@ function App() {
     initialTasks,
     getInitialTasks
   );
+  
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const total = tasks.length;
@@ -58,11 +60,11 @@ function App() {
   });
 
   useEffect(() => { 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks])
   
   function getInitialTasks() { 
-    const savedTasks = localStorage.getItem("tasks");
+    const savedTasks = localStorage.getItem(STORAGE_KEY);
     if (savedTasks) { 
       return JSON.parse(savedTasks);
     } else {
