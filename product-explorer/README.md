@@ -1,16 +1,93 @@
-# React + Vite
+# Product Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive React application for browsing and exploring products using a public products API.
 
-Currently, two official plugins are available:
+The project was built to practice routing, API architecture, custom hooks, filtering, sorting, debounced search, and reusable React components.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Browse products from an external API
+- Search products by title
+- Debounced search
+- Filter products by category
+- Sort products by price
+- Product details page
+- Dynamic routes
+- Loading and error states
+- Responsive product grid
+- Reusable components
+- Custom hooks for data fetching
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React
+- JavaScript
+- React Router
+- Vite
+- CSS
+- Fetch API
+- DummyJSON API
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## React Concepts Practiced
+
+- `useState`
+- `useEffect`
+- Custom hooks
+- Props
+- Component composition
+- Conditional rendering
+- List rendering
+- Derived state
+- Debouncing
+- React Router
+- Dynamic routes
+- `useParams`
+- API service layer
+- Loading and error handling
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── ProductCard.jsx
+│   ├── ProductControls.jsx
+│   └── ProductsGrid.jsx
+├── hooks/
+│   ├── useProduct.js
+│   └── useProducts.js
+├── pages/
+│   ├── Home.jsx
+│   └── ProductDetails.jsx
+├── services/
+│   └── productsApi.js
+├── App.jsx
+├── App.css
+└── main.jsx
+
+productsApi.js
+      ↓
+custom hooks
+      ↓
+pages
+      ↓
+components
+
+/                 → Products page
+/products/:id     → Product details page
+
+What I Learned
+
+This project helped me practice separating API logic, state logic, and UI into different layers.
+
+I also learned how to work with dynamic routes, create reusable components, implement debounced search, and combine multiple filters and sorting in a React application.
+
+Future Improvements
+Pagination
+Server-side search
+Dynamic categories from API
+Favorites
+Shopping cart
+Better loading skeletons
+Error boundary
+Backend integration

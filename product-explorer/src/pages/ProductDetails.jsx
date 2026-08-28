@@ -1,46 +1,47 @@
 import { useParams, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getProductById } from "../services/productsApi";
+import useProduct from "../hooks/useProduct";
 
 function ProductDetails() {
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
     const { id } = useParams();
+    const { product, loading, error } = useProduct(id);
     
-    useEffect(() => { 
-        async function loadProduct() { 
-            try {
-                setLoading(true);
-                setError("");
-                setProduct(null);
-                const data = await getProductById(id);
-                setProduct(data);
-            } catch (error) {
-                setError(error.message)
-            } finally { 
-                setLoading(false);
-            }
-        }
-        loadProduct();
-    },[id])
-    
-    return (
-        <div>
-            <Link to={`/`}>← Back to Products</Link>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-            {product && (
-            <div>
-                <h2>{product.title}</h2>
-                <img src={product.thumbnail} alt={product.title} />
-                <p>{product.description}</p>
-                <p>Price: ${product.price}</p>
-                <p>Category: {product.category}</p>
+   return (
+    <div className="details-page">
+        <Link className="back-link" to="/">
+        ← Back to Products
+        </Link>
+
+        {loading && <p className="status">Loading...</p>}
+        {error && <p className="error">{error}</p>}
+
+        {product && (
+        <div className="product-details">
+            <div className="details-image-wrapper">
+            <img
+                src={product.thumbnail}
+                alt={product.title}
+            />
             </div>
-            )}
+
+            <div className="details-content">
+            <p className="product-category">
+                {product.category}
+            </p>
+
+            <h2>{product.title}</h2>
+
+            <p className="details-description">
+                {product.description}
+            </p>
+
+            <p className="details-price">
+                ${product.price}
+            </p>
+            </div>
         </div>
-    )
+        )}
+    </div>
+    );
         
 }
 

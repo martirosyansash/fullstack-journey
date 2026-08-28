@@ -1,29 +1,14 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "../services/productsApi";
-import ProductCard from "../components/ProductCard";
+import ProductsControls from "../components/ProductControls";
+import ProductsGrid from "../components/ProductsGrid";
+import useProducts from "../hooks/useProducts";
 function Home() {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
+    const { products, loading, error } = useProducts();
     const [search, setSearch] = useState("");
     const [debouncedSearch, setDebouncedSearch] = useState("");
     const [category, setCategory] = useState("all");
     const [sort, setSort] = useState("");
     
-    useEffect(() => { 
-        async function productsFetch() {
-            try {
-                setLoading(true);
-                const data = await getProducts();
-                setProducts(data.products);
-            } catch (error) {
-                setError(error.message);
-            } finally { 
-                setLoading(false)
-            }    
-        }
-        productsFetch()
-    }, [])
 
     useEffect(() => { 
         const id  = setTimeout(() => {
@@ -56,40 +41,24 @@ function Home() {
     }
     
     return (
-        <div>
+        <div className="home-page">
             <h2>Products</h2>
-            <input
-                type="text"
-                value={search}
-                onChange={(event) => { setSearch(event.target.value) }}
-                placeholder="Search products..."
+            <ProductsControls
+                search={search}
+                setSearch={setSearch}
+                sort={sort}
+                setSort={setSort}
+                category={category}
+                setCategory={setCategory}
             />
-            <select
-                value={sort}
-                onChange={(event) => setSort(event.target.value)}>
-                <option value="">Sort by</option>
-                <option value="low">Price: Low to High</option>
-                <option value="high">Price: High to Low</option>
-            </select>
-            <select
-                value={category}
-                onChange={(event) => setCategory(event.target.value)}>
-                <option value="all">All Categories</option>
-                <option value="beauty">Beauty</option>
-                <option value="fragrances">Fragrances</option>
-                <option value="furniture">Furniture</option>
-                <option value="groceries">Groceries</option>
-            </select>
+            {!loading && !error && sortedProducts.length === 0 && (
+                <p>No products found.</p>
+            )}
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
-            {sortedProducts.map((product) => {
-                return (
-                    <ProductCard
-                        product={product}
-                        key={product.id}
-                        />
-                    )
-             })}
+            <ProductsGrid
+                product={sortedProducts}
+            />
         </div>
     );
 }
