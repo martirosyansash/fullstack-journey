@@ -1,4 +1,4 @@
-name: Deploy Smart To-Do App
+name: Deploy All Projects to GitHub Pages
 
 on:
   push:
@@ -10,25 +10,86 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Create site folder
+        run: mkdir -p site
+
+      - name: Copy HTML CSS JS projects
+        run: |
+          cp -r 01-html-css-portfolio site/
+          cp -r 02-dom-practice site/
+          cp -r 03-random-user-app site/
+          cp -r 04-smart-todo-app site/
+
+      - name: Build React Journey Day 1
+        working-directory: react-journey-day1
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/react-journey-day1
+          cp -r dist/* ../site/react-journey-day1/
+
+      - name: Build React Journey Day 2
+        working-directory: react-journey-day2
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/react-journey-day2
+          cp -r dist/* ../site/react-journey-day2/
+
+      - name: Build React Todo
+        working-directory: react-todo
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/react-todo
+          cp -r dist/* ../site/react-todo/
+      - name: Build Product Explorer
+        working-directory: product-explorer
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/product-explorer
+          cp -r dist/* ../site/product-explorer/
+      - name: Build React Example
+        working-directory: react-example
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/react-example
+          cp -r dist/* ../site/react-example/
+
+      - name: Build React Weather App
+        working-directory: react-weather-app
+        run: |
+          npm ci
+          npm run build
+          mkdir -p ../site/react-weather-app
+          cp -r dist/* ../site/react-weather-app/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload Smart To-Do App
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './04-smart-todo-app'
+          path: ./site
 
       - name: Deploy to GitHub Pages
         id: deployment
