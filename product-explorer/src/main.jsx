@@ -1,15 +1,13 @@
-import './App.css'
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import ProductDetails from "./pages/ProductDetails";
+import { BrowserRouter } from 'react-router-dom'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import { StrictMode } from 'react'
 
-function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/products/:id" element={<ProductDetails />} />
-    </Routes>
-  )
-}
-
-export default App
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter basename="/fullstack-journey/product-explorer">
+      <App />
+    </BrowserRouter>
+  </StrictMode>
+)
