@@ -358,3 +358,12 @@ form button {
     grid-template-columns: 1fr;
   }
 }
+
+.filters input[type="text"] {
+  color: #1f2937;
+  background-color: #ffffff;
+}
+
+.filters input[type="text"]::placeholder {
+  color: #9ca3af;
+}
